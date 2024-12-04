@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbs' scripts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: lightblue;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 1100px;
+            transition: all 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .container:hover {
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #ddd;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .search-bar {
+            width: 80%;
+            max-width: 500px;
+            padding: 12px;
+            border: 2px solid #28a74;
+            border-radius: 10px;
+            font-size: 1.2em;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            transition: border 0.5s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .search-bar:focus {
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .scripts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .scripts-container:hover {
+            transform: scale(1.03); /* Add a slight zoom effect on hover */
+        }
+
+        .script-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            width: 100%;
+            max-width: 450px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-in-out forwards;
+        }
+
+        .script-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .script-header {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .subheader {
+            color: lightblue;
+            font-size: 1em;
+            margin-top: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .script-code {
+            background: #2e2e2e;
+            padding: 20px;
+            border-radius: 10px;
+            color: #f5f5f5;
+            font-family: 'Source Code Pro', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .script-code:hover {
+            background: #333;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .copy-button, .join-game-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            color: #fff;
+        }
+
+        .copy-button {
+            background: #28a745;
+        }
+
+        .copy-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .join-game-button {
+            background: #007bff;
+        }
+
+        .join-game-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #aaa;
+            text-align: center;
+            animation: fadeIn 1.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .script-item.new-style {
+            background: rgba(10, 10, 10, 0.8); 
+            border: 2px solid lightblue;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .script-item.new-style:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .script-header.new-style {
+            color: #ff6347;
+            font-weight: bold;
+        }
+
+        .script-code.new-style {
+            background: #111;
+            border: 1px solid #ff6347;
+            padding: 15px;
+        }
+
+        .copy-button.new-style {
+            background: #000000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .copy-button.new-style:hover {
+            background: #1f1f1f;
+        }
+
+        .join-game-button.new-style {
+            background: #086100;
+        }
+
+        .join-game-button.new-style:hover {
+            background: #0e8a03;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <input type="text" class="search-bar" placeholder="Search game name..." onkeyup="searchScripts()">
+
+        <p>Welcome, here you can find scripts mostly made by Orbs. There are absolutely no ads, no malicious scripts, or keys. Thanks for using the website!</p>
+
+        <div class="scripts-container">
+            <div class="script-item new-style">
+                <div class="script-header">Pro Clicker Simulator</div>
+                <div class="subheader">An admin panel with OP features!</div>
+                <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/pro-clicker-simulator-admin-panel.lua"))()
+</div>
+                <div class="button-container">
+                    <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+                    <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/125043349704380/Pro-Clicker-Simulator')">Game link</button>
+                </div>
+            </div>
+            
+            <!-- Another script item, with different content -->
+            <div class="script-item new-style">
+                <div class="script-header">UNIVERSAL: MOBILE DEX</div>
+                <div class="subheader">Let's you look into the games' files, great for finding vulnerabilities!</div>
+                <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/mobile-dex.lua"))()
+</div>
+                <div class="button-container">
+                    <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            
+            <div class="script-item new-style">
+    <div class="script-header">THE CASTLE👁️ [FANMADE]</div>
+    <div class="subheader">Infinite rebirths and a Revive GUI in game! All credits to brozil on scriptblox.</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/df3-2-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/17883142987/THE-CASTLE-FANMADE')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Climb and Get $R 🤑 (Free VIP 💎) 1,000 Stairs</div>
+    <div class="subheader">Loopkills everyone, will eventually make everyone just have a torso...(UNOBFUSCATED SCRIPT)</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/cagr1000stairs-unobfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/17351965223/Climb-and-Get-R-Free-VIP-1-000-Stairs')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Bloxcity RP</div>
+    <div class="subheader">Just infinite money. (UNOBFUSCATED SCRIPT)</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/brp-unobfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/14621554335/Bloxcity-RP')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Patched: RNG Cart Ride Adventure</div>
+    <div class="subheader">OP, infinite gems!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/rngcra-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/18993029136/RNG-Cart-Ride-Adventure')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Get Robox Escape For Free Parkour Obby Robux</div>
+    <div class="subheader">Spams nukes to make the game unplayable!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/GREFFPOR-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/17785916809/Get-Robox-Escape-For-Free-Parkour-Obby-Robux')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Guess The Doors Entities 👁️</div>
+    <div class="subheader">A GUI with kill all features. Might patch soon!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/GTDE-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/114782592631094/Guess-The-Doors-Entities')">Game link</button>
+    </div>
+</div>
+
+            
+<div class="script-item new-style">
+    <div class="script-header">🚨 Good Or Bad?</div>
+    <div class="subheader">OP, a GUI with 12 features!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/GOB-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/137583690300688/Good-Or-Bad')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">doctors office 🔊</div>
+    <div class="subheader">Free drag, and infinite coins!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/DO-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/18169009346/doctors-office')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Escape The Lava🔥</div>
+    <div class="subheader">OP, a GUI with 12 features!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/ETL-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/98280977550908/Escape-The-Lava')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Guess The Doors But Bad Kawaii Entities Items Achi</div>
+    <div class="subheader">Get answers, and Complete aura (MUST BE NEAR ONE)</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/GTDBBKEIA-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/12467329018/Guess-The-Doors-But-Bad-Kawaii-Entities-Items-Achi')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Good or Evil</div>
+    <div class="subheader">Get money, and always chooser.</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/GOE-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/18169009346/doctors-office')">Game link</button>
+    </div>
+</div>
+
+
+
+<div class="script-item new-style">
+    <div class="script-header">⚠️Acid Escape</div>
+    <div class="subheader">Just infinite points.</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/AE-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/16841760655/Acid-Escape')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Realistic Ragdoll Physics</div>
+    <div class="subheader">Dev panel?</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/RRP-unobfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/6305582775/Realistic-Ragdoll-Physics')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Free Donation Spinner</div>
+    <div class="subheader">Spawn nukes, you can spam it too!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/FDS-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/130491334574811/Free-Donation-Spinner')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">NEW Don't Press The Button Furious Jumper (BETA)</div>
+    <div class="subheader">Rain coins, and lag the server! (SERVERSIDED)</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/DPTBFJ-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/9075479275/NEW-Dont-Press-The-Button-Furious-Jumper-BETA')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">LAVA TSUNAMI 🔥</div>
+    <div class="subheader">Infinite coins!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/LT-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/16805761403/LAVA-TSUNAMI')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">THE CASTLE👁️ [FANMADE] 2</div>
+    <div class="subheader">An admin panel! (MUST HAVE ATLEAST ONE REVIVE)</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/TC-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/17883142987/THE-CASTLE-FANMADE')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">Cold Donations 🥶</div>
+    <div class="subheader">Free gamepass items!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/CD-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/75189617133257/Cold-Donations')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">FREE ROBOX TRAMPOLINE OBBY 💸</div>
+    <div class="subheader">You can spam nukes!</div>
+    <div class="script-code">loadstring(game:HttpGet("https://getorbs.us.to/FRTO-obfuscated.lua"))()
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/18843638664/FREE-ROBOX-TRAMPOLINE-OBBY')">Game link</button>
+    </div>
+</div>
+
+
+<div class="script-item new-style">
+    <div class="script-header">a</div>
+    <div class="subheader">a</div>
+    <div class="script-code">a
+    </div>
+    <div class="button-container">
+        <button class="copy-button new-style" onclick="copyToClipboard(this)">Copy</button>
+        <!-- Optional: Add a button to join the game -->
+        <button class="join-game-button new-style" onclick="joinGame('https://www.roblox.com/games/75189617133257/Cold-Donations')">Game link</button>
+    </div>
+</div>
+
+
+        </div>
+        
+        <footer>
+            <p>&copy; 
+                Scripts made by orbs - Modified source code of @ExploitFin's unfinished script website (ty)</p>
+        </footer>
+    </div>
+
+    <script>
+        // Function to copy the script content of the specific script box clicked
+        function copyToClipboard(buttonElement) {
+            const scriptContent = buttonElement.closest('.script-item').querySelector('.script-code').textContent;
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = scriptContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+            alert(`Script copied to clipboard!`);
+        }
+
+        // Function to join the game
+        function joinGame(gameUrl) {
+            window.location.href = gameUrl;
+        }
+
+        // Search function to filter script items
+        function searchScripts() {
+            const searchTerm = document.querySelector('.search-bar').value.toLowerCase();
+            const scripts = document.querySelectorAll('.script-item');
+
+            scripts.forEach(script => {
+                const scriptHeader = script.querySelector('.script-header').textContent.toLowerCase();
+                if (scriptHeader.includes(searchTerm)) {
+                    script.style.display = 'block';
+                } else {
+                    script.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
